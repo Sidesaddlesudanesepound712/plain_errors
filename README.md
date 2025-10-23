@@ -2,11 +2,10 @@
 
 A **Rails middleware** that provides concise, **plain text error output optimized for LLMs and coding agents**.
 
-This lets your tool test your application and debug errors without filling up the context windows.
+This lets your tool test your application and debug errors without filling up its context window.
 
 For example, if you're using Playwright MCP with Claude Code or another
-LLM-powered tool, PlainErrors will return simpler error messages that take up
-less of the context window.
+LLM-powered tool, PlainErrors will return simpler error messages.
 
 ## Token Comparison Summary
 
