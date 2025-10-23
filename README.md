@@ -46,7 +46,7 @@ if defined?(PlainErrors)
   PlainErrors.configure do |config|
     config.enabled = Rails.env.development?
     config.show_code_snippets = true
-    config.code_lines_context = 3
+    config.code_lines_context = 2
     config.trigger_headers = ['X-Plain-Errors', 'X-LLM-Request']
   end
 
@@ -215,7 +215,7 @@ If you run into issues with other frameworks, please open an issue.
 | ------                  | -------                               | -----------                               |
 | `enabled`               | `Rails.env.development?`              | Enable/disable the middleware             |
 | `show_code_snippets`    | `true`                                | Include source code around error lines    |
-| `code_lines_context`    | `3`                                   | Number of lines before/after error        |
+| `code_lines_context`    | `2`                                   | Number of lines before/after error        |
 | `show_request_info`     | `false`                               | Include HTTP request details              |
 | `max_stack_trace_lines` | `5`                                   | Max stack trace lines (nil for unlimited) |
 | `application_root`      | `Rails.root`                          | Root path for abbreviating paths          |
