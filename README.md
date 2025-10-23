@@ -26,6 +26,8 @@ They're just not optimized for LLMs or automation workflows.)
 
 ## Installation
 
+_Cheat code: just point your AI agent to this README and ask it to install!_
+
 Add to your Gemfile:
 
 ```ruby
