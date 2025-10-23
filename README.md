@@ -222,8 +222,6 @@ If you run into issues with other frameworks, please open an issue.
 | `show_code_snippets`    | `true`                                | Include source code around error lines    |
 | `code_lines_context`    | `3`                                   | Number of lines before/after error        |
 | `show_request_info`     | `false`                               | Include HTTP request details              |
-| `show_variables`        | `false`                               | Include variable inspection               |
-| `max_variable_size`     | `1000`                                | Max size for variable inspection          |
 | `max_stack_trace_lines` | `5`                                   | Max stack trace lines (nil for unlimited) |
 | `application_root`      | `Rails.root`                          | Root path for abbreviating paths          |
 | `trigger_headers`       | `['X-Plain-Errors', 'X-LLM-Request']` | Headers that trigger plaintext output     |
