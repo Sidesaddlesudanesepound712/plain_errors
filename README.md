@@ -29,12 +29,8 @@ They're just not optimized for LLMs or automation workflows.)
 Add to your Gemfile:
 
 ```ruby
-gem 'plain_errors', group: :development
-
-# OR
-
 group :development do
-  gem 'plain_errors'
+  gem 'plain_errors', github: 'panozzaj/plain_errors'
 end
 ```
 
